@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。   tcp客户端： &amp;gt;graph TD; client[&quot;TCP客户端&quot;]---s[&quot;socket()&quot;]--&amp;gt;c[&quot;connect()&quot;]--&amp;gt;w[&quot;write()&quot;]--&amp;gt;r[&quot;read()&quot;]--&amp;gt;cl[&quot;close()&quot;] r--&amp;gt;w server[&quot;TCP服务器端&quot;]">
+  <meta name="description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。语言：C++  1.前言本文仅仅涉及到Windows中的SOCKET编程实现。在linux中，认为网络连接是一个文件，也有文件描述符。所以当使用Socket创建连接后，应使用普通的文件操作函数来传输数据，即：使用read()读取从远程计算机传来的数据，用write()向远程计算机">
 <meta name="keywords" content="Socket">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOCKET网络编程：编程实现">
 <meta property="og:url" content="https://www.voidsky.cn/2020/01/11/SOCKET网络编程：编程实现/index.html">
 <meta property="og:site_name" content="VoidSky">
-<meta property="og:description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。   tcp客户端： &amp;gt;graph TD; client[&quot;TCP客户端&quot;]---s[&quot;socket()&quot;]--&amp;gt;c[&quot;connect()&quot;]--&amp;gt;w[&quot;write()&quot;]--&amp;gt;r[&quot;read()&quot;]--&amp;gt;cl[&quot;close()&quot;] r--&amp;gt;w server[&quot;TCP服务器端&quot;]">
+<meta property="og:description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。语言：C++  1.前言本文仅仅涉及到Windows中的SOCKET编程实现。在linux中，认为网络连接是一个文件，也有文件描述符。所以当使用Socket创建连接后，应使用普通的文件操作函数来传输数据，即：使用read()读取从远程计算机传来的数据，用write()向远程计算机">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-11T11:22:12.679Z">
+<meta property="og:updated_time" content="2020-01-11T12:59:48.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SOCKET网络编程：编程实现">
-<meta name="twitter:description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。   tcp客户端： &amp;gt;graph TD; client[&quot;TCP客户端&quot;]---s[&quot;socket()&quot;]--&amp;gt;c[&quot;connect()&quot;]--&amp;gt;w[&quot;write()&quot;]--&amp;gt;r[&quot;read()&quot;]--&amp;gt;cl[&quot;close()&quot;] r--&amp;gt;w server[&quot;TCP服务器端&quot;]">
+<meta name="twitter:description" content="本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。语言：C++  1.前言本文仅仅涉及到Windows中的SOCKET编程实现。在linux中，认为网络连接是一个文件，也有文件描述符。所以当使用Socket创建连接后，应使用普通的文件操作函数来传输数据，即：使用read()读取从远程计算机传来的数据，用write()向远程计算机">
 
 
 
@@ -381,7 +381,7 @@
                 
               
 
-              <time title="创建时间：2020-01-11 18:26:27 / 修改时间：19:22:12" itemprop="dateCreated datePublished" datetime="2020-01-11T18:26:27+08:00">2020-01-11</time>
+              <time title="创建时间：2020-01-11 18:26:27 / 修改时间：20:59:48" itemprop="dateCreated datePublished" datetime="2020-01-11T18:26:27+08:00">2020-01-11</time>
             </span>
           
 
@@ -439,18 +439,47 @@
 
       
         <blockquote>
-<p>本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。</p>
+<p>本文仅仅为个人学习笔记，内容多来源网络，不保证系统性、严谨性。另外本文局限于Windows下的简单的SOCKET编程。<br>语言：C++</p>
+</blockquote>
+<h4 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h4><p>本文仅仅涉及到Windows中的SOCKET编程实现。在linux中，认为网络连接是一个文件，也有文件描述符。所以当使用Socket创建连接后，应使用普通的文件操作函数来传输数据，即：使用read()读取从远程计算机传来的数据，用write()向远程计算机写入数据。而在，Windows中会把Socket当作一个网络连接来对待，使用recv() / send() 函数发送和接收。还有其他差别，在此仅仅有个大致了解。</p>
+<h3 id="2-C-S模式"><a href="#2-C-S模式" class="headerlink" title="2.C/S模式"></a>2.C/S模式</h3><p>C/S模式，即Client/Server模式。TCP/IP通信中主要进行的就是C/S交互。</p>
+<p><b>服务端</b>：建立socket，申明自身的port和IP，并绑定到socket，使用listen监听，然后不断用accept去查看是否有连接。如果有，捕获socket，并通过recv获取消息的内容，通信完成后调用closeSocket关闭这个对应accept到的socket。如果不需要等待任何客户端连接，那么用closeSocket直接关闭自身的socket。</p>
+<p><b>客户端</b>：建立socket，通过端口号和地址确定目标服务器，使用Connect连接到服务器，send发送消息，等待处理，通信完成后调用closeSocket关闭socket。</p>
+<h3 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3.代码实现"></a>3.代码实现</h3><h4 id="3-1-Server端"><a href="#3-1-Server端" class="headerlink" title="3.1 Server端"></a>3.1 Server端</h4><h5 id="服务器端代码："><a href="#服务器端代码：" class="headerlink" title="服务器端代码："></a>服务器端代码：</h5><p>Server.cpp:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;winsock2.h&gt;</span><br><span class="line">#pragma comment (lib, &quot;ws2_32.lib&quot;)  //加载 ws2_32.dll</span><br><span class="line">int main()&#123;</span><br><span class="line">    //初始化 DLL</span><br><span class="line">    WSADATA wsaData;</span><br><span class="line">    WSAStartup( MAKEWORD(2, 2), &amp;wsaData);</span><br><span class="line">    //创建套接字</span><br><span class="line">    SOCKET servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line">    //绑定套接字</span><br><span class="line">    sockaddr_in sockAddr;</span><br><span class="line">    memset(&amp;sockAddr, 0, sizeof(sockAddr));  //每个字节都用0填充</span><br><span class="line">    sockAddr.sin_family = PF_INET;  //使用IPv4地址</span><br><span class="line">    sockAddr.sin_addr.s_addr = inet_addr(&quot;127.0.0.1&quot;);  //具体的IP地址</span><br><span class="line">    sockAddr.sin_port = htons(1234);  //端口</span><br><span class="line">    bind(servSock, (SOCKADDR*)&amp;sockAddr, sizeof(SOCKADDR));</span><br><span class="line">    //进入监听状态</span><br><span class="line">    listen(servSock, 20);</span><br><span class="line">    //接收客户端请求</span><br><span class="line">    SOCKADDR clntAddr;</span><br><span class="line">    int nSize = sizeof(SOCKADDR);</span><br><span class="line">    SOCKET clntSock = accept(servSock, (SOCKADDR*)&amp;clntAddr, &amp;nSize);</span><br><span class="line">    //向客户端发送数据</span><br><span class="line">    char *str = &quot;Hello World!&quot;;</span><br><span class="line">    send(clntSock, str, strlen(str)+sizeof(char), NULL);</span><br><span class="line">    //关闭套接字</span><br><span class="line">    closesocket(clntSock);</span><br><span class="line">    closesocket(servSock);</span><br><span class="line">    //终止 DLL 的使用</span><br><span class="line">    WSACleanup();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码解析：</p>
+<h5 id="1-引用"><a href="#1-引用" class="headerlink" title="1.引用"></a>1.引用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;winsock2.h&gt;</span><br><span class="line">#pragma comment (lib, &quot;ws2_32.lib&quot;)  //加载 ws2_32.dll</span><br></pre></td></tr></table></figure>
+
+<p>Windows 下的 socket 程序依赖 Winsock.dll 或 ws2_32.dll，必须提前加载。</p>
+<h5 id="2-通过socket-函数创建一个套接字"><a href="#2-通过socket-函数创建一个套接字" class="headerlink" title="2.通过socket()函数创建一个套接字"></a>2.通过socket()函数创建一个套接字</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//创建套接字</span><br><span class="line">    SOCKET servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>socket()函数：<br><font color="red"> int socket(int domain, int type, int protocol);</font></p>
+<p><font color="red">domain</font>：即协议域，又称为协议族（family）。常用的协议族有，AF_INET、AF_INET6、AF_LOCAL（或称AF_UNIX，Unix域socket）、AF_ROUTE等等。协议族决定了socket的地址类型，在通信中必须采用对应的地址，如AF_INET决定了要用ipv4地址（32位的）与端口号（16位的）的组合、AF_UNIX决定了要用一个绝对路径名作为地址。<br><font color="red">type</font>：指定socket类型。常用的socket类型有，SOCK_STREAM、SOCK_DGRAM、SOCK_RAW、SOCK_PACKET、SOCK_SEQPACKET等等（socket的类型有哪些？）。<br><font color="red">protocol</font>：故名思意，就是指定协议。常用的协议有，IPPROTO_TCP、IPPTOTO_UDP、IPPROTO_SCTP、IPPROTO_TIPC等，它们分别对应TCP传输协议、UDP传输协议、STCP传输协议、TIPC传输协议（这个协议我将会单独开篇讨论！）。<br>注意：并不是上面的type和protocol可以随意组合的，如SOCK_STREAM不可以跟IPPROTO_UDP组合。当protocol为0时，会自动选择type类型对应的默认协议。</p>
+</blockquote>
+<h5 id="3-通过bind-绑定套接字"><a href="#3-通过bind-绑定套接字" class="headerlink" title="3.通过bind()绑定套接字"></a>3.通过bind()绑定套接字</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//绑定套接字</span><br><span class="line">    sockaddr_in sockAddr;</span><br><span class="line">    memset(&amp;sockAddr, 0, sizeof(sockAddr));  //每个字节都用0填充</span><br><span class="line">    sockAddr.sin_family = PF_INET;  //使用IPv4地址</span><br><span class="line">    sockAddr.sin_addr.s_addr = inet_addr(&quot;127.0.0.1&quot;);  //具体的IP地址</span><br><span class="line">    sockAddr.sin_port = htons(1234);  //端口</span><br><span class="line">    bind(servSock, (SOCKADDR*)&amp;sockAddr, sizeof(SOCKADDR));</span><br></pre></td></tr></table></figure>
+
+<p>通过 bind() 函数将套接字 servSock 与特定的 IP 地址和端口绑定，IP 地址和端口都保存在 sockaddr_in 结构体中。</p>
+<blockquote>
+<p>bind()函数<br>正如上面所说bind()函数把一个地址族中的特定地址赋给socket。例如对应AF_INET、AF_INET6就是把一个ipv4或ipv6地址和端口号组合赋给socket。<br><font color="red">int bind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);</font><br>函数的三个参数分别为：<br><font color="red">sockfd</font>：即socket描述字，它是通过socket()函数创建了，唯一标识一个socket。bind()函数就是将给这个描述字绑定一个名字。<br><font color="red">addr</font>：一个const struct sockaddr *指针，指向要绑定给sockfd的协议地址。这个地址结构根据地址创建socket时的地址协议族的不同而不同，如ipv4对应的是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;struct sockaddr_in &#123;</span><br><span class="line">&gt;sa_family_t sin_family;</span><br><span class="line">&gt;in_port_t sin_port;</span><br><span class="line">&gt;struct in_addr sin_addr;</span><br><span class="line">&gt;&#125;;</span><br><span class="line">&gt;struct in_addr &#123;</span><br><span class="line">&gt;uint32_t s_addr;</span><br><span class="line">&gt;&#125;;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <blockquote>
-<p>tcp客户端：</p>
-<pre class="mermaid">>graph TD;
-client["TCP客户端"]---s["socket()"]-->c["connect()"]-->w["write()"]-->r["read()"]-->cl["close()"]
-r-->w
-server["TCP服务器端"]---s1["socket()"]-->b["bind()"]-->l["listen()"]-->a["accept()"]-->|阻塞直到有客户端连接|r1["read()"]-->|处理请求|w1["write()"]-->r2["read()"]-->c1["close()"]
-c-->|建立连接|r1
-w<-->|请求数据|r1
-w1-->|回应数据|r
-c-->|结束连接|r2</--></pre></blockquote>
+<p>ipv6对应的是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;struct sockaddr_in6 &#123;</span><br><span class="line">&gt;sa_family_t sin6_family;</span><br><span class="line">&gt;in_port_t sin6_port;</span><br><span class="line">&gt;uint32_t sin6_flowinfo;</span><br><span class="line">&gt;struct in6_addr sin6_addr;</span><br><span class="line">&gt;uint32_t sin6_scope_id;</span><br><span class="line">&gt;&#125;;</span><br><span class="line">&gt;struct in6_addr &#123;</span><br><span class="line">&gt;unsigned char s6_addr[16];</span><br><span class="line">&gt;&#125;;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>Unix域对应的是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;#define UNIX_PATH_MAX 108</span><br><span class="line">&gt;struct sockaddr_un &#123;</span><br><span class="line">&gt;sa_family_t sun_family;</span><br><span class="line">&gt;char sun_path[UNIX_PATH_MAX];</span><br><span class="line">&gt;&#125;;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p><font color="red">addrlen</font>：对应的是地址的长度。<br>通常服务器在启动的时候都会绑定一个众所周知的地址（如ip地址+端口号），用于提供服务，客户就可以通过它来接连服务器；而客户端就不用指定，有系统自动分配一个端口号和自身的ip地址组合。这就是为什么通常服务器端在listen之前会调用bind()，而客户端就不会调用，而是在connect()时由系统随机生成一个。</p>
+</blockquote>
+<blockquote>
+<p>拓展:<br>网络字节序与主机字节序<br>主机字节序就是我们平常说的大端和小端模式：不同的CPU有不同的字节序类型，这些字节序是指整数在内存中保存的顺序，这个叫做主机序。引用标准的Big-Endian和Little-Endian的定义如下：<br>　　a) Little-Endian就是低位字节排放在内存的低地址端，高位字节排放在内存的高地址端。<br>　　b) Big-Endian就是高位字节排放在内存的低地址端，低位字节排放在内存的高地址端。<br>网络字节序：4个字节的32 bit值以下面的次序传输：首先是0～7bit，其次8～15bit，然后16～23bit，最后是24~31bit。这种传输次序称作大端字节序。由于TCP/IP首部中所有的二进制整数在网络中传输时都要求以这种次序，因此它又称作网络字节序。字节序，顾名思义字节的顺序，就是大于一个字节类型的数据在内存中的存放顺序，一个字节的数据没有顺序的问题了。</p>
+<p>所以： 在将一个地址绑定到socket的时候，请先将主机字节序转换成为网络字节序，而不要假定主机字节序跟网络字节序一样使用的是Big-Endian。由于 这个问题曾引发过血案！公司项目代码中由于存在这个问题，导致了很多莫名其妙的问题，所以请谨记对主机字节序不要做任何假定，务必将其转化为网络字节序再 赋给socket。</p>
+</blockquote>
 
       
     </div>
@@ -542,8 +571,17 @@ c-->|结束连接|r2</--></pre></blockquote>
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -661,6 +699,23 @@ c-->|结束连接|r2</--></pre></blockquote>
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1.前言</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#2-C-S模式"><span class="nav-number"></span> <span class="nav-text">2.C/S模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-代码实现"><span class="nav-number"></span> <span class="nav-text">3.代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Server端"><span class="nav-number">1.</span> <span class="nav-text">3.1 Server端</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#服务器端代码："><span class="nav-number">1.1.</span> <span class="nav-text">服务器端代码：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-引用"><span class="nav-number">1.2.</span> <span class="nav-text">1.引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-通过socket-函数创建一个套接字"><span class="nav-number">1.3.</span> <span class="nav-text">2.通过socket()函数创建一个套接字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-通过bind-绑定套接字"><span class="nav-number">1.4.</span> <span class="nav-text">3.通过bind()绑定套接字</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
