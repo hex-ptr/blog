@@ -94,17 +94,24 @@
 
 
 
-  <meta name="description" content="现在的一切都将成为未来的黑历史。">
-<meta name="keywords" content="游戏,编程,算法,Python,C#,C++">
-<meta property="og:type" content="website">
-<meta property="og:title" content="VoidSky">
-<meta property="og:url" content="https://www.voidsky.cn/categories/博客/index.html">
+  <meta name="description" content="菲涅尔效应定义在真实世界中，除了金属之外，其它物质均有不同程度的“菲涅尔效应”。简单的讲，就是视线垂直于表面时，反射较弱，而当视线非垂直表面时，夹角越小，反射越明显。如果你看向一个圆球，那圆球中心的反射较弱，靠近边缘较强。不过这种过度关系被折射率影响。如果不使用“菲涅尔效应”的话，则反射是不考虑视点与表面之间的角度的。 如果你站在湖边，低头看脚下的水，你会发现水是透明的，反射不是特别强烈；如果你看">
+<meta name="keywords" content="Blender,渲染">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机图形学：菲涅尔效应(Fresnel Effect)">
+<meta property="og:url" content="https://www.voidsky.cn/2020/02/20/计算机图形学：菲涅尔效应-Fresnel-Effect/index.html">
 <meta property="og:site_name" content="VoidSky">
-<meta property="og:description" content="现在的一切都将成为未来的黑历史。">
+<meta property="og:description" content="菲涅尔效应定义在真实世界中，除了金属之外，其它物质均有不同程度的“菲涅尔效应”。简单的讲，就是视线垂直于表面时，反射较弱，而当视线非垂直表面时，夹角越小，反射越明显。如果你看向一个圆球，那圆球中心的反射较弱，靠近边缘较强。不过这种过度关系被折射率影响。如果不使用“菲涅尔效应”的话，则反射是不考虑视点与表面之间的角度的。 如果你站在湖边，低头看脚下的水，你会发现水是透明的，反射不是特别强烈；如果你看">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img.jk51.com/img_jk51/152280548.jpeg">
+<meta property="og:image" content="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=304822551,102842830&fm=26&gp=0.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/21/3nGRzT.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/21/3nJSwd.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/21/3n8340.png">
+<meta property="og:updated_time" content="2020-02-21T03:14:06.502Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VoidSky">
-<meta name="twitter:description" content="现在的一切都将成为未来的黑历史。">
+<meta name="twitter:title" content="计算机图形学：菲涅尔效应(Fresnel Effect)">
+<meta name="twitter:description" content="菲涅尔效应定义在真实世界中，除了金属之外，其它物质均有不同程度的“菲涅尔效应”。简单的讲，就是视线垂直于表面时，反射较弱，而当视线非垂直表面时，夹角越小，反射越明显。如果你看向一个圆球，那圆球中心的反射较弱，靠近边缘较强。不过这种过度关系被折射率影响。如果不使用“菲涅尔效应”的话，则反射是不考虑视点与表面之间的角度的。 如果你站在湖边，低头看脚下的水，你会发现水是透明的，反射不是特别强烈；如果你看">
+<meta name="twitter:image" content="http://img.jk51.com/img_jk51/152280548.jpeg">
 
 
 
@@ -112,7 +119,7 @@
 
   
   
-  <link rel="canonical" href="https://www.voidsky.cn/categories/博客/">
+  <link rel="canonical" href="https://www.voidsky.cn/2020/02/20/计算机图形学：菲涅尔效应-Fresnel-Effect/">
 
 
 
@@ -122,7 +129,7 @@
   };
 </script>
 
-  <title>分类: 博客 | VoidSky</title>
+  <title>计算机图形学：菲涅尔效应(Fresnel Effect) | VoidSky</title>
   
 
 
@@ -170,7 +177,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -260,7 +267,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -317,83 +324,222 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>博客<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.voidsky.cn/2020/02/20/计算机图形学：菲涅尔效应-Fresnel-Effect/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Esthem">
+      <meta itemprop="description" content="现在的一切都将成为未来的黑历史。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VoidSky">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/09/Markdown基础学习/" itemprop="url">
-            
-              <span itemprop="name">Markdown基础学习</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">计算机图形学：菲涅尔效应(Fresnel Effect)
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T13:26:10+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-20 21:00:32" itemprop="dateCreated datePublished" datetime="2020-02-20T21:00:32+08:00">2020-02-20</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-02-21 11:14:06" itemprop="dateModified" datetime="2020-02-21T11:14:06+08:00">2020-02-21</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机图形学/" itemprop="url" rel="index"><span itemprop="name">计算机图形学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="菲涅尔效应定义"><a href="#菲涅尔效应定义" class="headerlink" title="菲涅尔效应定义"></a>菲涅尔效应定义</h2><p>在真实世界中，除了金属之外，其它物质均有不同程度的“菲涅尔效应”。简单的讲，就是视线垂直于表面时，反射较弱，而当视线非垂直表面时，夹角越小，反射越明显。如果你看向一个圆球，那圆球中心的反射较弱，靠近边缘较强。不过这种过度关系被折射率影响。<br>如果不使用“菲涅尔效应”的话，则反射是不考虑视点与表面之间的角度的。<br><img src="http://img.jk51.com/img_jk51/152280548.jpeg" alt></p>
+<p>如果你站在湖边，低头看脚下的水，你会发现水是透明的，反射不是特别强烈；如果你看远处的湖面，你会发现水并不是透明的，但反射非常强烈。这就是“菲涅尔效应”。<br><img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=304822551,102842830&fm=26&gp=0.jpg" alt="ss"></p>
+<h2 id="菲涅尔效应模拟"><a href="#菲涅尔效应模拟" class="headerlink" title="菲涅尔效应模拟"></a>菲涅尔效应模拟</h2><p>工具为Blender，一种模拟方式为：使用混合着色器，控制边缘处为光泽着色器，中间部分为漫射着色器。通过层权重和RGB曲线控制光泽着色器与漫射着色器的范围。</p>
+<ol>
+<li>通过层权重和RGB曲线描绘应用不同着色器的渲染权重。<br><img src="https://s2.ax1x.com/2020/02/21/3nGRzT.png" alt="层权重和RGB曲线"></li>
+<li>白色部分渲染光泽，黑色部分渲染漫射。<br><img src="https://s2.ax1x.com/2020/02/21/3nJSwd.png" alt></li>
+<li>具体材质节点配置如下<br><img src="https://s2.ax1x.com/2020/02/21/3n8340.png" alt="blender"></li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>菲涅尔效应取决与物体材质本身的物理特性。</li>
+<li>视线垂直于表面时，反射较弱，而当视线非垂直表面时，夹角越小，反射越明显。</li>
+</ol>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Blender/" rel="tag"># Blender</a>
+          
+            <a href="/tags/渲染/" rel="tag"># 渲染</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/11/SOCKET网络编程：编程实现/" rel="next" title="SOCKET网络编程：编程实现">
+                <i class="fa fa-chevron-left"></i> SOCKET网络编程：编程实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -413,8 +559,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -538,6 +693,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#菲涅尔效应定义"><span class="nav-number">1.</span> <span class="nav-text">菲涅尔效应定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菲涅尔效应模拟"><span class="nav-number">2.</span> <span class="nav-text">菲涅尔效应模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -669,6 +841,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   
 
@@ -684,6 +860,8 @@
 
   
 
+
+  
 
 
   
