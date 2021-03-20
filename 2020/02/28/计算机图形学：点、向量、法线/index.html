@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="简介本文为Scratchapixel文章的学习性翻译。不保证翻译的准确性，如遇到理解问题，请参考原文。官方地址|本章地址 索引Lesson：Mathematics and Physics for Computer Graphics课程：计算机图形学中的数学和物理Chapters：Geometry章节：几何学 几何学目录  Points, Vectors and Normals 点、向量、法线  C">
+<meta name="keywords" content="Scratchapixel,几何学,翻译,计算机图形学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机图形学：点、向量、法线">
+<meta property="og:url" content="https://www.voidsky.cn/2020/02/28/计算机图形学：点、向量、法线/index.html">
+<meta property="og:site_name" content="VoidSky">
+<meta property="og:description" content="简介本文为Scratchapixel文章的学习性翻译。不保证翻译的准确性，如遇到理解问题，请参考原文。官方地址|本章地址 索引Lesson：Mathematics and Physics for Computer Graphics课程：计算机图形学中的数学和物理Chapters：Geometry章节：几何学 几何学目录  Points, Vectors and Normals 点、向量、法线  C">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/28/3DkgoV.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/28/3DktdP.png">
+<meta property="og:updated_time" content="2020-04-07T06:43:02.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机图形学：点、向量、法线">
+<meta name="twitter:description" content="简介本文为Scratchapixel文章的学习性翻译。不保证翻译的准确性，如遇到理解问题，请参考原文。官方地址|本章地址 索引Lesson：Mathematics and Physics for Computer Graphics课程：计算机图形学中的数学和物理Chapters：Geometry章节：几何学 几何学目录  Points, Vectors and Normals 点、向量、法线  C">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/02/28/3DkgoV.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://www.voidsky.cn/2020/02/28/计算机图形学：点、向量、法线/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>计算机图形学：点、向量、法线 | VoidSky</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">VoidSky</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Esthem个人博客</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.voidsky.cn/2020/02/28/计算机图形学：点、向量、法线/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Esthem">
+      <meta itemprop="description" content="现在的一切都将成为未来的黑历史。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VoidSky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机图形学：点、向量、法线
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-28 15:43:29" itemprop="dateCreated datePublished" datetime="2020-02-28T15:43:29+08:00">2020-02-28</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-04-07 14:43:02" itemprop="dateModified" datetime="2020-04-07T14:43:02+08:00">2020-04-07</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/计算机图形学/" itemprop="url" rel="index"><span itemprop="name">计算机图形学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>本文为Scratchapixel文章的学习性翻译。<br>不保证翻译的准确性，如遇到理解问题，请参考原文。<br><a href="https://www.scratchapixel.com/" target="_blank" rel="noopener">官方地址</a>|<a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry" target="_blank" rel="noopener">本章地址</a></p>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><p>Lesson：Mathematics and Physics for Computer Graphics<br>课程：计算机图形学中的数学和物理<br>Chapters：Geometry<br>章节：几何学</p>
+<p><strong>几何学目录</strong></p>
+<ul>
+<li><strong>Points, Vectors and Normals 点、向量、法线</strong> </li>
+<li>Coordinate Systems 坐标系</li>
+<li>Math Operations on Points and Vectors 点和向量的数学运算</li>
+<li>Matrices 矩阵</li>
+<li>How Does Matrix Work: Part 1 矩阵如何工作 第一部分</li>
+<li>How Does Matrix Work: Part 2 矩阵如何工作 第二部分</li>
+<li>Transforming Points and Vectors 转换点和向量</li>
+<li>Row Major vs Column Major Vector 行主序 vs 列主序</li>
+<li>Matrix Operations 矩阵运算</li>
+<li>Spherical Coordinates and Trigonometric Functions 球坐标和三角函数</li>
+<li>Creating an Orientation Matrix or Local Coordinate System 创建一个方向矩阵或局部坐标系</li>
+<li>Transforming Normals 法线变换</li>
+<li>Source Code 源代码</li>
+</ul>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>关键字：向量，点，矩阵，法线，变换，笛卡尔坐标系，笛卡尔坐标，球坐标，坐标系。</p>
+<blockquote>
+<p><em>“几何学是数学的一个分支，主要研究形状、大小、图形的相对位置和空间性质等问题。”</em></p>
+</blockquote>
+<h2 id="一句忠告"><a href="#一句忠告" class="headerlink" title="一句忠告"></a>一句忠告</h2><p>这门课程对大多数读者来说可能是冗长且乏味的。如果你是计算机图形学这个领域的初学者，请花一些时间仔细阅读它。完全的理解<a href="https://en.wikipedia.org/wiki/Graphics_pipeline" target="_blank" rel="noopener">CG pipeline</a>中的这一部分是至关重要的，并且可以在之后的学习中为你省下很多时间。</p>
+<h2 id="几何介绍"><a href="#几何介绍" class="headerlink" title="几何介绍"></a>几何介绍</h2><p>计算机图形中的点（Points）、向量（vectors）、矩阵（matrices）和法线（normals）就好比文学中的字母；因此大多数的CG书籍中都以线性代数和几何学作为开始的章节。然而，对于大多数想要学习图像编程的人来说，在学习如何制作图像（making images）之前就呈现大量的数学知识是十分令人不悦的。如果因为你不喜欢数学或者说根本就不知道矩阵是什么从而觉得你不适合CG编程，请不要现在就放弃。</p>
+<p>我们将会从“3D渲染基础”的几堂课开始，这些课程因为某些原因不会要求任何线性代数的先备知识。尽管这是一种相当非常规的CG编程技术教授方式，但我们相信从一些实用且有趣的部分开始更加令人兴奋：例如，光线追踪器的入门，这一部分只要求非常少的数学知识和编程知识。编写一个渲染器是学习数学的一种更加令人兴奋且更有价值的方式，因为你可以逐步看到某些东西是如何被用来产生一个具体的结果的（即你的最终图像）。话虽如此，但点、向量和矩阵在制作CG图像的过程中起着重要的作用；所以我们将在几乎每一课中大量地使用它们。</p>
+<p>在这节课中，你将会学会这些结构体是什么，它们怎么工作和可以操控它们的各种方法。这节课同样也会解释CG研究人员们数年来在解决他们的问题和编写他们的代码时所使用的线性代数中的不同约定（conventions）。你需要了解这些（conventions），因为它们通常在书中没有提到（在网上也很少提到）。这些约定（conventions）是非常重要的，在你可以阅读或使用别的开发者的代码或方法是时候，你必须首先检查他们使用了什么约定（conventions)。</p>
+<p>在我们开始之前做一个简短的说明。如果你是一个数学纯粹主义者（mathematical purist），当你看到这里的解释在技术上与线性代数无关时可能会觉得奇怪。我们像要保持这门课程的宽泛性，同时包含一些在CG中常用的简单的数学方法，可能这些方法只与向量和矩阵有松散的联系。比如说，一个点，从数学上来讲，与线性代数（<em>数学的一个分支，只涉及向量</em>）无关。我们选择提到点是因为它们在CG中非常常见（并且可以使用线性代数的相同数学技术来操纵它们）。如果你还没有理解点和向量的区别，不用担心，我们在这一章中将会经常提到它们。</p>
+<h2 id="什么是线性代数？向量的介绍"><a href="#什么是线性代数？向量的介绍" class="headerlink" title="什么是线性代数？向量的介绍"></a>什么是线性代数？向量的介绍</h2><p>所以线性代数到底是什么？我们这节课要学什么？像我们上一节提到的那样，线性代数是一门研究<strong>向量</strong>的数学分支。现在你可能会问，“嘛是向量？它在CG中有嘛用？”我们不会讲太多细节，但向量可以表示为一组<strong>数字</strong>。这组数字可以假设为任意你想要的长度，当然有时候也可以称之为做数学上<strong>元组（tuple）</strong>。如果我们想要一个特定长度的向量，我们可以称之为<strong>N元组（n-tuple）</strong>，其中<strong>N</strong>表示向量的元素数量。下面这个例子就是一个含有六个元素的向量。<br><br>$V=\big(a,b,c,d,e,f\big)$</p>
+<p>其中a,b,c,d,e,f都是一个实数</p>
+<p>将这些数字组合在一起的想法是，它们在一个问题的语境中共同的代表了另一个值或概念。比如，在计算机图形学中，向量在空间中既可以被用来表示坐标，也可被用来表示方向。我们还可以通过一系列的操作以一种非常强大和紧凑（compact）的方法转换（或修改）这些向量。向量内容的转换过程是通过所谓的 <strong>线性转换（linear transformation</strong> 来实现的。我们将会在下一节中花更多的时间来谈论转换（transformations）；现在，最重要的是知道它们非常有用就好了。</p>
+<h2 id="点和向量"><a href="#点和向量" class="headerlink" title="点和向量"></a>点和向量</h2><p><strong>点（Point）</strong> 和 <strong>向量（Vector）</strong> 这两个术语在许多科学领域中都有不同的用法。在这一节中，我们将会讲解这两个术语于我们的教程和计算机图形学的关系。</p>
+<p><img src="https://s2.ax1x.com/2020/02/28/3DkgoV.png" alt="图1:点描述位置。向量看作方向。"></p>
+<p>如图，在三维空间内,一个<b>点</b>就是一个<b>位置</b>。另一方面，在三维空间内，一个<b>向量</b>通常代表一个<b>方向</b>（和一些相应的数值或大小）。向量可以看作是一个指向不同方向的箭头。三维的<b>点</b>和<b>向量</b>当然是相似的，因为它们都用上面提到的元组符号表示。</p>
+<p>$V=\big(x,y,z\big)$</p>
+<p>其中(x, y, z)也是实数。<br>记住，当与数学家或物理学家交谈时，他们对向量或点的理解可能会更加笼统；向量和点不一定仅限于我们在CG中使用。对于他们来说，一个向量可以是任意大小的，甚至是无限大小的(也就是说它可以包含任意数量的数字)。</p>
+<p>在本节的最后我们简要的提一下<strong>齐次点（homogeneous points）</strong>。有时候为了数学上的方便，有必要添加第四个元素。下面给出一个具有齐次坐标点的例子：</p>
+<p>$P_H=(x,y,z,w)$</p>
+<p>齐次点用于点与矩阵相乘。现在不用太在意它。我们现在只是提一下，因为它们有时会出现在一些资料中，可能会让读者感到困惑。我们将在本课后面详细解释。</p>
+<h2 id="转换的简单简介"><a href="#转换的简单简介" class="headerlink" title="转换的简单简介"></a>转换的简单简介</h2><p>你可能想知道线性变换（linear transformation）到底是如何影响点和向量的。其实非常简单。我们在CG中对点进行的最常见的操作之一就是简单地在空间中移动它们。这种变换（transformation）可以更具体的称之为<strong>平移（translation）</strong>，它在渲染过程中扮演者重要的角色。</p>
+<p>这个平移操作仅仅是 <strong>原点（可以看作是一个输入坐标点）</strong> 的一个线性变换。对<strong>向量</strong>而言，<strong>平移</strong> 是没有意义的。这是因为向量从哪里开始是不重要的；不管位置如何所有的“箭头”都是一样的长度，指向一样的方向，也就是说是等价的。相对的，我们通常对向量使用另一个线性变换：<strong>旋转（rotation）</strong>。还有很多其他的操作，但是现在我们只考虑点的平移和向量的旋转。</p>
+<p>$P\rightarrow Translate \rightarrow P_T$<br>$V\rightarrow Rotate \rightarrow V_T$</p>
+<p>下标字母T代表 <strong>变换(transformed)</strong> 。</p>
+<p>你可能已经注意到，到目前为止，我们还没有讨论向量的长度或大小的意义。实际上，箭头的长度在CG中非常重要。当向量的长度为确定的值1时，我们可以说这个向量是<strong>normalised</strong><font color="red" size="2">(单词译作：正规化的，标准化的 下翻译 <b>归一化</b>)</font>（你会经常听到和读到这个术语）。向量归一化的过程包括改变向量使其长度变为1,但是它的方向保持不变。大多时候我们需要对向量进行归一化处理。然而，在某些情况下，最好不要对其进行归一化，因为向量的长度可能有意义。</p>
+<p>举个例子，想象一下你从$A$点连线到$B$点，画的这条线就是一个向量，它表示点$B$相对于点$A$的位置。换一种方式说，如果你站在了$A$点它则表示给出了$B$点的方向。这个向量的长度表示从$A$到$B$的距离。某些算法有时需要这个距离。</p>
+<p>归一化向量往往是Bugs的来源，每当声明一个向量的时候（或使用的时候），我们建议你经常下意识的问一下自己是否这个向量 <strong>需要/不需要</strong> 被归一化。</p>
+<h2 id="法线"><a href="#法线" class="headerlink" title="法线"></a>法线</h2><p>法线是计算机图形学(和几何学)中使用的技术术语，用于描述几何对象在该表面上一点的表面方向。从技术上讲，$P$点所在表面上的<strong>表面法线</strong>，可以看作是垂直于$P$点的相切平面的向量。法线在 <strong>Shading(阴影着色)</strong> 中扮演着重要的角色，它们被用来计算物体的亮度。(详情请见后面课程《光与影》).<br><img src="https://s2.ax1x.com/2020/02/28/3DktdP.png" alt></p>
+<p>法线可以被认为成向量，但是有一点需要注意：它们的变换方式与向量不同。这是我们花时间来区分它们的主要原因之一。你可以在“<a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/transforming-normals" target="_blank" rel="noopener">法线变换</a>”一章中找到关于这个主题的更多信息。目前，重要的是理解它们是什么。</p>
+<h2 id="从理论到C"><a href="#从理论到C" class="headerlink" title="从理论到C++"></a>从理论到C++</h2><p>在我们的c++代码中，我们不会区分点、向量和法线;我们用一个Vec3类来表示这三者。<font size="2" color="#FF8247">Vec3(一个类模板，这样我们可以根据需要创建float型、int型或double型)</font>  一些开发人员喜欢将它们区分开来,这显然限制了犯错的可能性。然而，根据经验，我们发现只处理一个惟一的类更加高效（更少的代码）。当然，还必须根据我们处理的Vec3是表示点，向量还是法线，来谨慎的调用一些特定的函数。你可能还记得，这将在我们使用转换时特别重要。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt; </span><br><span class="line">class Vec3 </span><br><span class="line">&#123; </span><br><span class="line">public: </span><br><span class="line">    // 3 most basic ways of initializing a vector</span><br><span class="line">    // 3种最基础的初始化向量的方式</span><br><span class="line">    Vec3() : x(T(0)), y(T(0)), z(T(0)) &#123;&#125; </span><br><span class="line">    Vec3(const T &amp;xx) : x(xx), y(xx), z(xx) &#123;&#125; </span><br><span class="line">    Vec3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) &#123;&#125; </span><br><span class="line">    T x, y, z; </span><br><span class="line">&#125;; </span><br><span class="line"> </span><br><span class="line">typedef Vec3&lt;float&gt; Vec3f; </span><br><span class="line"> </span><br><span class="line">Vec3&lt;float&gt; a; </span><br><span class="line">Vec3f b;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从第一章开始，你应该记住，数学上一个向量可以是任意维数。然而在CG中，我们使用了一个更具体的定义:向量是三维空间中的方向（因此用三个数字表示）另外，我们以点来表示位置（同样在三维空间中也用三个数字表示）齐次点用四个数字表示，但它是一个特殊的例子，我们以后会学习。</p>
+<p>点和向量可以用线性变换进行变换。</p>
+<blockquote>
+<p>您将看到经常使用术语线性变换。 如果一条线变换后仍为一条线，那么我们说的是线性变换（乘以矩阵就是线性变换）。<a href="https://www.bilibili.com/video/av33233549?from=search&amp;seid=12799085878133496645" target="_blank" rel="noopener">视频：什么是线性变换?</a></p>
+</blockquote>
+<p>这种转换的典型例子是点的 <strong>平移</strong> 和向量的 <strong>旋转</strong> 。向量的长度可以设置为1，这也就是我们说的 <strong>归一化（normalised）</strong> 。向量的长度（在归一化之前）表示两点之间的距离，有时在某些算法中是必需的。因此，开发人员必须谨慎选择何时归一化一个向量，并且知道为什么要归一化。</p>
+<h2 id="接下来是什么？"><a href="#接下来是什么？" class="headerlink" title="接下来是什么？"></a>接下来是什么？</h2><p>一件重要的事情我们还没有解释，那就是点和向量中定义的3个的数字分别代表什么。这些数字表示点(在2D或3D空间中)相对于参考点（reference）(有时也称为原点)的坐标。这个reference，我们在技术上称之为<strong>坐标系统</strong>，是我们下一章的主题。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Scratchapixel/" rel="tag"># Scratchapixel</a>
+          
+            <a href="/tags/几何学/" rel="tag"># 几何学</a>
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/计算机图形学/" rel="tag"># 计算机图形学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/20/计算机图形学：菲涅尔效应-Fresnel-Effect/" rel="next" title="计算机图形学：菲涅尔效应(Fresnel Effect)">
+                <i class="fa fa-chevron-left"></i> 计算机图形学：菲涅尔效应(Fresnel Effect)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/03/20/Git学习笔记/" rel="prev" title="Git学习笔记">
+                Git学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Esthem">
+            
+              <p class="site-author-name" itemprop="name">Esthem</p>
+              <div class="site-description motion-element" itemprop="description">现在的一切都将成为未来的黑历史。</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/esthem" title="GitHub &rarr; https://github.com/esthem" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:iaxs@live.cn" title="E-Mail &rarr; mailto:iaxs@live.cn" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">2.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">3.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一句忠告"><span class="nav-number">3.1.</span> <span class="nav-text">一句忠告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几何介绍"><span class="nav-number">3.2.</span> <span class="nav-text">几何介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是线性代数？向量的介绍"><span class="nav-number">3.3.</span> <span class="nav-text">什么是线性代数？向量的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点和向量"><span class="nav-number">3.4.</span> <span class="nav-text">点和向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换的简单简介"><span class="nav-number">3.5.</span> <span class="nav-text">转换的简单简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#法线"><span class="nav-number">3.6.</span> <span class="nav-text">法线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从理论到C"><span class="nav-number">3.7.</span> <span class="nav-text">从理论到C++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接下来是什么？"><span class="nav-number">3.9.</span> <span class="nav-text">接下来是什么？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-esthem"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Esthem</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'forest',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
