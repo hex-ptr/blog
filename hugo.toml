@@ -1,0 +1,13 @@
+baseURL = "https://www.hexptr.com/"
+languageCode = "zh-cn"
+theme = "anubis2"
+title = "*HexPtr"
+
+[params.author]
+name = "hex-ptr"
+
+[markup.goldmark.renderer]
+unsafe = true # true | false; Enable unsafe mode to have a better experience
+
+[markup.highlight]
+style = 'base16-snazzy' # Chroma style, find more at here: https://swapoff.org/chroma/playground/
