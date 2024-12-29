@@ -8,6 +8,12 @@
     <language>zh-cn</language>
     
       
+        <managingEditor>i@hexptr.com
+          
+            (hex-ptr)
+          
+        </managingEditor>
+      
 
       
     
@@ -22,7 +28,7 @@
       <title>Hello World</title>
       <link>/posts/hello-world/</link>
       <pubDate>Sun, 29 Dec 2024 17:33:12 +0800</pubDate>
-      
+      <author>i@hexptr.com (hex-ptr)</author>
       <guid>/posts/hello-world/</guid>
       <description>&lt;p&gt;这是一个新网站的测试文章！&lt;/p&gt;
 </description>
