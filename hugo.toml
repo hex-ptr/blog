@@ -1,5 +1,5 @@
 # 网站基本信息
-baseURL = 'https://example.org/'
+baseURL = 'https://www.hexptr.com/'
 languageCode = 'zh'
 defaultContentLanguage = "zh"
 title = '*HexPtr'
