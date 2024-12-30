@@ -1,0 +1,113 @@
+# 网站基本信息
+baseURL = 'https://example.org/'
+languageCode = 'zh'
+defaultContentLanguage = "zh"
+title = '*HexPtr'
+theme = 'PaperMod'
+
+# 构建
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+# 压缩
+[minify]
+disableXML = true
+minifyOutput = true
+
+# 主题参数
+[params]
+env = "production"
+title = "ExampleSite"
+description = "ExampleSite description"
+keywords = [ "Blog", "Portfolio", "PaperMod" ]
+author = "hexptr"
+images = [ "<link or path of image for opengraph, twitter-cards>" ]
+DateFormat = "2006-01-02"
+defaultTheme = "auto"
+disableThemeToggle = false
+
+ShowReadingTime = true
+ShowShareButtons = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = false
+ShowWordCount = true
+ShowRssButtonInSectionTermList = true
+UseHugoToc = true
+disableSpecial1stPost = false
+disableScrollToTop = false
+comments = false
+hidemeta = false
+hideSummary = false
+showtoc = false
+tocopen = false
+
+# 主页
+[params.homeInfoParams]
+Title = "嗨，你好！ 👋"
+Content = "欢迎来到我的博客，我在这里分享我的生活，学习，工作，以及其他有趣的事情。"
+
+[[params.socialIcons]]
+name = "x"
+url = "https://x.com/"
+
+[[params.socialIcons]]
+name = "stackoverflow"
+url = "https://stackoverflow.com"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/"
+
+
+[params.assets]
+favicon = "<link / abs url>"
+favicon16x16 = "<link / abs url>"
+favicon32x32 = "<link / abs url>"
+apple_touch_icon = "<link / abs url>"
+safari_pinned_tab = "<link / abs url>"
+
+[params.label]
+text = "HexPtr"
+icon = "/apple-touch-icon.png"
+iconHeight = 26
+
+# 菜单栏
+[[menu.main]]
+identifier = "home"
+name = "主页"
+url = "/"
+weight = 1
+
+[[menu.main]]
+identifier = "posts"
+name = "文章"
+url = "/posts/"
+weight = 2
+
+[[menu.main]]
+identifier = "categories"
+name = "分类"
+url = "/categories/"
+weight = 10
+
+[[menu.main]]
+identifier = "tags"
+name = "标签"
+url = "/tags/"
+weight = 20
+
+[[menu.main]]
+identifier = "projects"
+name = "项目"
+url = "/projects/"
+weight = 30
+
+[[menu.main]]
+identifier = "links"
+name = "链接"
+url = "/links/"
+weight = 40
+
